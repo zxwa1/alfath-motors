@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   description: "معرض السيارات الفاخرة - الفتح موتورز",
 };
 
+import { CustomCursor } from "@/components/ui/CustomCursor";
+import { Preloader } from "@/components/ui/Preloader";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -18,7 +21,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ar" dir="rtl" className="dark">
-      <body className={`${cairo.variable} ${inter.variable} font-arabic bg-black text-white antialiased selection:bg-white/20 selection:text-white`}>
+      <body className={`${cairo.variable} ${inter.variable} font-arabic bg-black text-white antialiased selection:bg-[#ff00a0]/30 selection:text-white overflow-x-hidden`}>
+        <Preloader />
+        <CustomCursor />
         {children}
       </body>
     </html>
