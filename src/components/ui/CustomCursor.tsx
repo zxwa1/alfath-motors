@@ -7,12 +7,16 @@ export function CustomCursor() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
 
+  const [isVisible, setIsVisible] = useState(false);
+
   useEffect(() => {
     // Only enable on devices with a fine pointer (mouse)
     const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
     if (isTouchDevice) {
       return;
     }
+    
+    setIsVisible(true);
 
     const updateMousePosition = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
@@ -33,8 +37,8 @@ export function CustomCursor() {
       }
     };
 
-    window.addEventListener("mousemove", updateMousePosition);
-    window.addEventListener("mouseover", handleMouseOver);
+    window.addEventListener("mousemove", updateMousePosition, { passive: true });
+    window.addEventListener("mouseover", handleMouseOver, { passive: true });
 
     document.body.style.cursor = "none";
 
@@ -45,8 +49,7 @@ export function CustomCursor() {
     };
   }, []);
 
-  // Hide entirely if it's a touch device
-  if (typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches) {
+  if (!isVisible) {
     return null;
   }
 

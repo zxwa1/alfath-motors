@@ -50,8 +50,8 @@ const CARS = [
 export function CarShowcase() {
   return (
     <section className="py-32 bg-black text-white px-4 relative overflow-hidden">
-      {/* Background ambient light */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-[#7928ca] rounded-full blur-[200px] opacity-10 pointer-events-none" />
+      {/* Background ambient light - hidden on mobile to prevent GPU lag */}
+      <div className="hidden md:block absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-[#7928ca] rounded-full blur-[200px] opacity-10 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         <motion.div 
