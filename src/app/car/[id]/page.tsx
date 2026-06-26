@@ -28,25 +28,25 @@ const CARS_DB = {
       "الحالة": "مستعملة - حالة ممتازة"
     }
   },
-  "porsche-911-carrera-2022": {
-    id: "porsche-911-carrera-2022",
-    name: "PORSCHE 911 CARRERA",
+  "porsche-911-gt3-rs-2022": {
+    id: "porsche-911-gt3-rs-2022",
+    name: "PORSCHE 911 GT3 RS",
     year: "2022",
-    price: "7,500,000 ج.م",
+    price: "15,500,000 ج.م",
     image: "/images/car2.png",
     specs: {
       "الماركة": "بورش",
-      "نسخة": "Carrera 992",
-      "المحرك (سي سي)": "3000 Twin-Turbo",
-      "كيلومترات": "15,000",
-      "ناقل الحركة": "PDK 8 سرعات",
-      "نوع الوقود": "بنزين",
-      "الجزء الداخلي": "جلد أحمر بوردو",
-      "اللون": "أبيض",
-      "السرعة القصوى": "293 كم/س",
-      "التسارع 0-100": "4.2 ثواني",
-      "نظام الصوت": "Bose Surround",
-      "الحالة": "كالزيرو"
+      "نسخة": "GT3 RS (992)",
+      "المحرك (سي سي)": "4000 Naturally Aspirated",
+      "كيلومترات": "2,000",
+      "ناقل الحركة": "PDK 7 سرعات رياضي",
+      "نوع الوقود": "بنزين 98",
+      "الجزء الداخلي": "الكانتارا مع قفص حماية (Roll Cage)",
+      "اللون": "أبيض مع خطوط حمراء",
+      "السرعة القصوى": "296 كم/س",
+      "التسارع 0-100": "3.2 ثواني",
+      "نظام الصوت": "Lightweight Audio",
+      "الحالة": "حالة الوكيل - لم تنزل حلبة"
     }
   },
   "range-rover-velar-2021": {
@@ -117,7 +117,7 @@ const CARS_DB = {
     name: "ROLLS-ROYCE GHOST",
     year: "2024",
     price: "25,000,000 ج.م",
-    image: "https://images.unsplash.com/photo-1631526615783-a4421d604e30?auto=format&fit=crop&q=80&w=2000",
+    image: "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?q=80&w=2000&auto=format&fit=crop",
     specs: {
       "الماركة": "رولز رويس",
       "نسخة": "Black Badge",

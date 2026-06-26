@@ -15,12 +15,12 @@ const CARS = [
     tag: "LUXURY SEDAN",
   },
   {
-    id: "porsche-911-carrera-2022",
-    name: "PORSCHE 911 CARRERA",
+    id: "porsche-911-gt3-rs-2022",
+    name: "PORSCHE 911 GT3 RS",
     year: "2022",
-    price: "7,500,000 ج.م",
+    price: "15,500,000 ج.م",
     image: "/images/car2.png",
-    tag: "SUPERCAR",
+    tag: "TRACK FOCUSED SUPERCAR",
   },
   {
     id: "range-rover-velar-2021",
@@ -51,7 +51,7 @@ const CARS = [
     name: "ROLLS-ROYCE GHOST",
     year: "2024",
     price: "25,000,000 ج.م",
-    image: "https://images.unsplash.com/photo-1631526615783-a4421d604e30?auto=format&fit=crop&q=80&w=2000",
+    image: "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?q=80&w=2000&auto=format&fit=crop",
     tag: "ULTRA LUXURY",
   },
 ];
