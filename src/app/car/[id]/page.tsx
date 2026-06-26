@@ -2,155 +2,146 @@
 
 import { motion } from "framer-motion";
 import { useParams, useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
 import { BookingModal } from "@/components/blocks/BookingModal";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
-const CARS_DB: Record<string, any> = {
-  "1": { 
-    name: "BMW 318 Luxury", 
-    price: "EGP 1,200,000", 
-    year: "2018", 
-    type: "Sedan",
-    km: "123,000",
-    engine: "1500 CC",
+const CARS_DB = {
+  "bmw-318-2018": {
+    id: "bmw-318-2018",
+    name: "BMW 318",
+    year: "2018",
+    price: "1,200,000 ج.م",
     image: "/images/bmw_318.png",
-    desc: "سيارة BMW الفئة الثالثة الفاخرة، بحالة ممتازة ومواصفات أداء استثنائية."
+    specs: {
+      "كيلومترات": "123,000",
+      "ناقل الحركة": "اوتوماتيك",
+      "نوع الوقود": "بنزين",
+      "الماركة": "بي ام دبليو",
+      "نسخة": "luxury",
+      "المحرك (سي سي)": "1500",
+      "الجزء الداخلي": "جلد بالكامل",
+      "اللون": "أسود"
+    }
   },
-  "2": { 
-    name: "Mercedes-AMG G 63", 
-    price: "EGP 12,500,000", 
-    year: "2024", 
-    type: "Luxury SUV",
-    km: "0",
-    engine: "4000 CC V8 Biturbo",
-    image: "/images/car1.png",
-    desc: "أيقونة مرسيدس الفاخرة المخصصة للأداء العالي والطرق الوعرة بتصميم لا يقهر."
-  },
-  "3": { 
-    name: "Porsche 911 GT3 RS", 
-    price: "EGP 18,900,000", 
-    year: "2024", 
-    type: "Sports Car",
-    km: "0",
-    engine: "4000 CC Flat-6",
+  "mercedes-c180-2020": {
+    id: "mercedes-c180-2020",
+    name: "MERCEDES C180",
+    year: "2020",
+    price: "2,500,000 ج.م",
     image: "/images/car2.png",
-    desc: "سيارة سباق بامتياز مرخصة للشارع، أداء خارق وتصميم أيروديناميكي مذهل."
+    specs: {
+      "كيلومترات": "45,000",
+      "ناقل الحركة": "اوتوماتيك",
+      "نوع الوقود": "بنزين",
+      "الماركة": "مرسيدس بنز",
+      "نسخة": "AMG",
+      "المحرك (سي سي)": "1500",
+      "الجزء الداخلي": "جلد أحمر",
+      "اللون": "أبيض"
+    }
   },
-  "4": { 
-    name: "Range Rover SV", 
-    price: "EGP 14,200,000", 
-    year: "2024", 
-    type: "Luxury SUV",
-    km: "0",
-    engine: "4400 CC V8",
+  "range-rover-velar-2021": {
+    id: "range-rover-velar-2021",
+    name: "RANGE ROVER VELAR",
+    year: "2021",
+    price: "4,100,000 ج.م",
     image: "/images/car3.png",
-    desc: "قمة الفخامة البريطانية مع محرك جبار ومقصورة داخلية بأعلى معايير الرفاهية."
-  },
+    specs: {
+      "كيلومترات": "30,000",
+      "ناقل الحركة": "اوتوماتيك",
+      "نوع الوقود": "بنزين",
+      "الماركة": "لاند روفر",
+      "نسخة": "R-Dynamic",
+      "المحرك (سي سي)": "2000",
+      "الجزء الداخلي": "جلد أسود",
+      "اللون": "رمادي"
+    }
+  }
 };
 
 export default function CarDetailsPage() {
   const params = useParams();
   const router = useRouter();
-  const [mounted, setMounted] = useState(false);
+  const [car, setCar] = useState<any>(null);
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null;
-
-  const car = CARS_DB[params.id as string];
+    if (params?.id) {
+      const carData = CARS_DB[params.id as keyof typeof CARS_DB];
+      if (carData) {
+        setCar(carData);
+      } else {
+        router.push("/");
+      }
+    }
+  }, [params, router]);
 
   if (!car) {
-    return (
-      <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center">
-        <h1 className="text-4xl font-black text-[#ff00a0]">السيارة غير موجودة</h1>
-        <Button onClick={() => router.push('/')} className="mt-8 bg-[#00d4ff] text-black font-bold">العودة للرئيسية</Button>
-      </div>
-    );
+    return <div className="min-h-screen bg-[#0a0a0a]" />;
   }
 
   return (
-    <main className="min-h-screen bg-black text-white relative">
-      <div className="absolute inset-0 z-0">
-        <div 
-          className="absolute inset-0 bg-cover bg-center opacity-30 blur-sm" 
-          style={{ backgroundImage: `url(${car.image})` }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent z-10" />
-      </div>
-
-      <div className="relative z-20 max-w-7xl mx-auto px-4 py-16 md:py-32 flex flex-col-reverse md:grid md:grid-cols-2 gap-8 md:gap-16 items-center min-h-screen">
-        <motion.div 
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
+    <main className="min-h-screen bg-[#0a0a0a] text-white pt-24 pb-32">
+      <div className="max-w-[90vw] mx-auto">
+        
+        {/* Back Button */}
+        <button 
+          onClick={() => router.back()}
+          className="font-industrial text-sm tracking-widest uppercase flex items-center gap-2 hover:text-[#d40000] transition-colors mb-12"
         >
-          <div className="mb-6 flex gap-4">
-            <span className="px-4 py-1.5 bg-[#ff00a0] text-white font-black text-xs uppercase tracking-widest">
-              OLX VERIFIED
-            </span>
-            <span className="px-4 py-1.5 bg-white text-black font-black text-xs uppercase tracking-widest">
-              {car.year}
-            </span>
-          </div>
-          
-          <h1 className="text-4xl md:text-8xl font-black mb-4 md:mb-6 uppercase tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-white to-white/60">
-            {car.name}
-          </h1>
-          
-          <p className="text-3xl md:text-4xl font-black text-[#00d4ff] mb-6 md:mb-8 drop-shadow-[0_0_15px_rgba(0,212,255,0.6)]">
-            {car.price}
-          </p>
+          <span className="text-xl">←</span> BACK TO SHOWROOM
+        </button>
 
-          <p className="text-lg md:text-xl text-zinc-400 mb-8 md:mb-12 font-bold leading-relaxed">
-            {car.desc}
-          </p>
-
-          <div className="grid grid-cols-2 gap-4 md:gap-6 mb-8 md:mb-12">
-            <div className="border border-white/10 p-3 md:p-4 bg-zinc-900/50 backdrop-blur-md">
-              <span className="text-[10px] md:text-xs text-[#ff00a0] font-bold block mb-1">المحرك</span>
-              <strong className="text-lg md:text-xl">{car.engine}</strong>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
+          
+          {/* Image Section - Brutalist styling */}
+          <div className="relative aspect-[4/3] bg-white/5 border border-white/10 p-4">
+            <div className="w-full h-full relative grayscale">
+              <Image 
+                src={car.image} 
+                alt={car.name} 
+                fill 
+                className="object-cover" 
+              />
             </div>
-            <div className="border border-white/10 p-3 md:p-4 bg-zinc-900/50 backdrop-blur-md">
-              <span className="text-[10px] md:text-xs text-[#ff00a0] font-bold block mb-1">العداد</span>
-              <strong className="text-lg md:text-xl">{car.km === "0" ? "جديد" : `${car.km} كم`}</strong>
-            </div>
-            <div className="border border-white/10 p-3 md:p-4 bg-zinc-900/50 backdrop-blur-md col-span-2">
-              <span className="text-[10px] md:text-xs text-[#ff00a0] font-bold block mb-1">النوع</span>
-              <strong className="text-lg md:text-xl">{car.type}</strong>
-            </div>
+            <div className="absolute top-0 right-0 w-16 h-16 border-t-2 border-r-2 border-[#d40000] translate-x-4 -translate-y-4" />
+            <div className="absolute bottom-0 left-0 w-16 h-16 border-b-2 border-l-2 border-[#d40000] -translate-x-4 translate-y-4" />
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4">
+          {/* Details Section */}
+          <div className="flex flex-col justify-center">
+            <span className="font-industrial text-[#d40000] text-sm tracking-[0.3em] font-bold mb-4">
+              EDITION // {car.year}
+            </span>
+            <h1 className="font-editorial text-5xl md:text-7xl font-black uppercase leading-none mb-8">
+              {car.name}
+            </h1>
+            
+            <div className="text-3xl font-industrial mb-12 border-b border-white/20 pb-6 font-bold">
+              {car.price}
+            </div>
+
+            {/* Specs Grid */}
+            <div className="grid grid-cols-2 gap-x-8 gap-y-6 mb-16 font-industrial text-sm">
+              {Object.entries(car.specs).map(([key, value]) => (
+                <div key={key} className="flex flex-col border-b border-white/10 pb-2">
+                  <span className="text-white/40 uppercase tracking-widest text-xs mb-1">{key}</span>
+                  <span className="font-bold">{value as React.ReactNode}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Brutalist Button */}
             <BookingModal 
               carName={car.name} 
               trigger={
-                <Button size="lg" className="w-full sm:flex-1 bg-gradient-to-r from-[#ff00a0] to-[#7928ca] text-white hover:opacity-90 text-lg md:text-xl py-6 md:py-8 rounded-none uppercase font-black">
-                  احجز معاينة الآن
-                </Button>
+                <button className="w-full font-industrial bg-white text-black py-6 text-xl tracking-widest uppercase font-bold hover:bg-[#d40000] hover:text-white transition-colors duration-300">
+                  REQUEST A TEST DRIVE
+                </button>
               } 
             />
-            <Button 
-              size="lg" 
-              variant="outline"
-              onClick={() => router.push('/')}
-              className="w-full sm:w-auto px-8 border-white/20 text-white hover:bg-white hover:text-black py-6 md:py-8 rounded-none font-bold"
-            >
-              رجوع
-            </Button>
           </div>
-        </motion.div>
-
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.9, y: 50 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden shadow-[0_0_30px_rgba(255,0,160,0.2)] md:shadow-[0_0_50px_rgba(255,0,160,0.2)] border border-white/10"
-        >
-          <img src={car.image} alt={car.name} className="w-full h-full object-cover" />
-        </motion.div>
+        </div>
       </div>
     </main>
   );

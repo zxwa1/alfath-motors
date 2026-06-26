@@ -1,51 +1,61 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export function Preloader() {
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    // Sharp fast loading
     const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2500); // 2.5 seconds loading
+      setIsLoading(false);
+    }, 1500);
     return () => clearTimeout(timer);
   }, []);
 
-  if (!loading) return null;
-
   return (
-    <motion.div 
-      initial={{ y: 0 }}
-      exit={{ y: "-100%", transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } }}
-      className="fixed inset-0 z-[10000] bg-black flex flex-col items-center justify-center overflow-hidden"
-    >
-      {/* Glitch Logo */}
-      <div className="flex flex-col items-center">
-        <motion.h1 
-          animate={{ x: [-2, 2, -2, 0], y: [1, -1, 1, 0] }}
-          transition={{ repeat: Infinity, duration: 0.2, repeatType: "mirror" }}
-          className="text-5xl sm:text-6xl md:text-9xl font-black text-white tracking-tighter drop-shadow-[4px_0_0_#00d4ff]"
+    <AnimatePresence>
+      {isLoading && (
+        <motion.div
+          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#0a0a0a] text-white overflow-hidden"
+          exit={{ y: "-100%", transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } }}
         >
-          AL FATH
-        </motion.h1>
-        
-        <motion.h1 
-          animate={{ x: [2, -2, 2, 0], opacity: [0.8, 1, 0.8] }}
-          transition={{ repeat: Infinity, duration: 0.15, repeatType: "mirror" }}
-          className="text-5xl sm:text-6xl md:text-9xl font-black text-[#ff00a0] tracking-widest drop-shadow-[-4px_0_0_#00d4ff]"
-        >
-          MOTORS
-        </motion.h1>
-      </div>
-
-      <motion.div 
-        initial={{ scaleX: 0 }}
-        animate={{ scaleX: 1 }}
-        transition={{ duration: 2, ease: "circOut" }}
-        className="w-64 h-1 bg-gradient-to-r from-[#ff00a0] to-[#00d4ff] mt-8 origin-left"
-      />
-    </motion.div>
+          {/* Brutalist huge text */}
+          <div className="relative overflow-hidden">
+            <motion.h1
+              className="font-editorial text-[15vw] leading-none tracking-tighter uppercase font-black"
+              initial={{ y: "100%" }}
+              animate={{ y: "0%" }}
+              transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1], delay: 0.2 }}
+            >
+              AL FATH
+            </motion.h1>
+          </div>
+          <div className="relative overflow-hidden mt-[-2vw]">
+            <motion.h2
+              className="font-industrial text-[5vw] leading-none tracking-widest text-[#d40000] font-bold"
+              initial={{ y: "-100%" }}
+              animate={{ y: "0%" }}
+              transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1], delay: 0.4 }}
+            >
+              MOTORS
+            </motion.h2>
+          </div>
+          
+          {/* Progress bar stark line */}
+          <motion.div 
+            className="absolute bottom-10 left-10 right-10 h-[2px] bg-[#333]"
+          >
+            <motion.div 
+              className="h-full bg-white"
+              initial={{ width: "0%" }}
+              animate={{ width: "100%" }}
+              transition={{ duration: 1.2, ease: "easeInOut" }}
+            />
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }

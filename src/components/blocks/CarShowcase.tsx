@@ -1,123 +1,101 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { TiltCard } from "@/components/ui/TiltCard";
 import Link from "next/link";
+import Image from "next/image";
 
 const CARS = [
-  { 
-    id: 1, 
-    name: "BMW 318 Luxury", 
-    price: "EGP 1,200,000", 
-    year: "2018", 
-    type: "Sedan",
-    km: "123,000",
-    engine: "1500 CC",
-    image: "/images/bmw_318.png"
+  {
+    id: "bmw-318-2018",
+    name: "BMW 318",
+    year: "2018",
+    price: "1,200,000 ج.م",
+    image: "/images/bmw_318.png",
+    tag: "LUXURY SEDAN",
   },
-  { 
-    id: 2, 
-    name: "Mercedes-AMG G 63", 
-    price: "EGP 12,500,000", 
-    year: "2024", 
-    type: "Luxury SUV",
-    km: "0",
-    engine: "4000 CC",
-    image: "/images/car1.png"
+  {
+    id: "mercedes-c180-2020",
+    name: "MERCEDES C180",
+    year: "2020",
+    price: "2,500,000 ج.م",
+    image: "/images/car2.png",
+    tag: "EXECUTIVE",
   },
-  { 
-    id: 3, 
-    name: "Porsche 911 GT3 RS", 
-    price: "EGP 18,900,000", 
-    year: "2024", 
-    type: "Sports Car",
-    km: "0",
-    engine: "4000 CC",
-    image: "/images/car2.png"
-  },
-  { 
-    id: 4, 
-    name: "Range Rover SV", 
-    price: "EGP 14,200,000", 
-    year: "2024", 
-    type: "Luxury SUV",
-    km: "0",
-    engine: "4400 CC",
-    image: "/images/car3.png"
+  {
+    id: "range-rover-velar-2021",
+    name: "RANGE ROVER VELAR",
+    year: "2021",
+    price: "4,100,000 ج.م",
+    image: "/images/car3.png",
+    tag: "PREMIUM SUV",
   },
 ];
 
 export function CarShowcase() {
   return (
-    <section className="py-32 bg-black text-white px-4 relative overflow-hidden">
-      {/* Background ambient light - hidden on mobile to prevent GPU lag */}
-      <div className="hidden md:block absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-[#7928ca] rounded-full blur-[200px] opacity-10 pointer-events-none" />
-
-      <div className="max-w-7xl mx-auto relative z-10">
-        <motion.div 
-          initial={{ opacity: 0, x: 50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="mb-20"
-        >
-          <h2 className="text-5xl md:text-7xl font-black mb-4 pb-2 text-transparent bg-clip-text bg-gradient-to-r from-white to-white/50">
-            العروض الحصرية
+    <section className="py-32 bg-[#0a0a0a] text-white relative border-b border-white/10">
+      <div className="max-w-[90vw] mx-auto">
+        {/* Section Header */}
+        <div className="mb-32 border-b border-white/20 pb-10 flex flex-col md:flex-row justify-between items-end">
+          <h2 className="font-editorial text-6xl md:text-8xl font-black uppercase leading-none">
+            EXCLUSIVE<br/>COLLECTION
           </h2>
-          <p className="text-[#00d4ff] text-xl font-bold tracking-widest uppercase drop-shadow-[0_0_10px_rgba(0,212,255,0.5)]">
-            أقوى السيارات المعروضة على OLX
+          <p className="font-industrial text-[#d40000] text-sm tracking-[0.2em] uppercase mt-4 md:mt-0 font-bold max-w-xs text-right">
+            CURATED SELECTION OF THE FINEST VEHICLES AVAILABLE IN EGYPT
           </p>
-        </motion.div>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        {/* Asymmetrical Grid */}
+        <div className="flex flex-col gap-32">
           {CARS.map((car, index) => (
             <motion.div
               key={car.id}
-              initial={{ opacity: 0, scale: 0.9, y: 50 }}
-              whileInView={{ opacity: 1, scale: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: index * 0.15, ease: "backOut" }}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+              className={`relative flex flex-col ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"} items-center gap-10 md:gap-20 group`}
             >
-              <Link href={`/car/${car.id}`} className="block">
-                <TiltCard className="group cursor-pointer">
-                {/* Image Container with Aggressive Hover */}
-                <div className="relative aspect-[4/5] bg-zinc-900 overflow-hidden mb-6 border border-white/5 group-hover:border-[#ff00a0]/50 transition-colors duration-500 shadow-2xl">
-                  {/* Glitch Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-tr from-[#ff00a0]/40 to-transparent opacity-0 group-hover:opacity-100 mix-blend-overlay transition-opacity duration-300 z-10" />
-                  
-                  <div 
-                    className="absolute inset-0 bg-cover bg-center transition-all duration-700 group-hover:scale-110 group-hover:rotate-1"
-                    style={{ backgroundImage: `url(${car.image})` }}
-                  />
-                  
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent z-20" />
-                  
-                  {/* Badges */}
-                  <div className="absolute top-6 right-6 z-30 flex flex-col gap-2">
-                    <span className="px-4 py-1.5 bg-white text-black font-black text-xs uppercase tracking-widest shadow-[0_0_15px_rgba(255,255,255,0.5)]">
-                      {car.year} | {car.engine}
-                    </span>
-                    <span className="px-4 py-1.5 bg-[#ff00a0] text-white font-black text-xs uppercase tracking-widest shadow-[0_0_15px_rgba(255,0,160,0.5)]">
-                      OLX VERIFIED
-                    </span>
-                  </div>
+              {/* Massive background number */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-editorial text-[30vw] font-black text-white/[0.02] pointer-events-none z-0">
+                0{index + 1}
+              </div>
 
-                  {/* Details positioned inside the image card for dramatic effect */}
-                  <div className="absolute bottom-6 left-6 right-6 z-30 transform transition-transform duration-500 md:group-hover:translate-y-[-10px]">
-                    <h3 className="text-2xl sm:text-3xl font-black mb-2 text-white drop-shadow-lg leading-tight uppercase">
-                      {car.name}
-                    </h3>
-                    <div className="flex flex-wrap gap-2 sm:gap-4 items-center mb-3 text-xs sm:text-sm text-zinc-300 font-bold uppercase tracking-widest">
-                       <span>{car.km === "0" ? "جديد" : `${car.km} كم`}</span>
-                       <span className="w-1.5 h-1.5 rounded-full bg-[#00d4ff] shadow-[0_0_10px_rgba(0,212,255,1)]" />
-                       <span>{car.type}</span>
-                    </div>
-                    <div className="h-[2px] w-12 bg-[#00d4ff] mb-3 transition-all duration-500 md:group-hover:w-full shadow-[0_0_10px_rgba(0,212,255,0.8)]" />
-                    <p className="text-xl sm:text-2xl font-bold text-[#00d4ff] drop-shadow-md">{car.price}</p>
-                  </div>
+              {/* Image Container */}
+              <Link href={`/car/${car.id}`} className="block w-full md:w-3/5 z-10 relative overflow-hidden bg-white/5 border border-white/10 aspect-[4/3]">
+                <div className="absolute inset-0 grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-105 ease-[0.76,0,0.24,1]">
+                  <Image
+                    src={car.image}
+                    alt={car.name}
+                    fill
+                    className="object-cover"
+                  />
                 </div>
-                </TiltCard>
+                {/* Red accent bar on hover */}
+                <div className="absolute top-0 left-0 w-full h-1 bg-[#d40000] scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500" />
               </Link>
+
+              {/* Text Content */}
+              <div className="w-full md:w-2/5 z-10 flex flex-col space-y-6">
+                <span className="font-industrial text-[#d40000] text-xs tracking-[0.3em] font-bold">
+                  {car.tag} // {car.year}
+                </span>
+                
+                <h3 className="font-editorial text-4xl md:text-6xl font-bold uppercase leading-none">
+                  {car.name}
+                </h3>
+                
+                <div className="w-full h-[1px] bg-white/20" />
+                
+                <div className="flex justify-between items-center font-industrial text-xl">
+                  <span className="text-white/50">PRICE</span>
+                  <span className="font-bold">{car.price}</span>
+                </div>
+
+                <Link href={`/car/${car.id}`} className="mt-8 font-industrial border border-white/30 py-4 text-center uppercase tracking-widest text-sm hover:bg-white hover:text-black transition-colors duration-300 font-bold">
+                  VIEW DETAILS
+                </Link>
+              </div>
             </motion.div>
           ))}
         </div>

@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Inter, Cairo } from "next/font/google";
+import { Space_Grotesk, Playfair_Display, Cairo } from "next/font/google";
 import "./globals.css";
 
-// Using Cairo for Arabic luxury typography and Inter as fallback
 const cairo = Cairo({ subsets: ["arabic"], variable: "--font-cairo" });
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const space = Space_Grotesk({ subsets: ["latin"], variable: "--font-space" });
+const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
 
 export const metadata: Metadata = {
   title: "Al Fath Motors | الفتح موتورز",
@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ar" dir="rtl" className="dark">
-      <body className={`${cairo.variable} ${inter.variable} font-arabic bg-black text-white antialiased selection:bg-[#ff00a0]/30 selection:text-white overflow-x-hidden`}>
+      <body className={`${cairo.variable} ${space.variable} ${playfair.variable} font-arabic bg-[#0a0a0a] text-white antialiased selection:bg-white selection:text-black overflow-x-hidden`}>
         <Preloader />
         <CustomCursor />
         {children}
