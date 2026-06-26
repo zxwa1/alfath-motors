@@ -34,19 +34,19 @@ const CARS = [
 export function CarShowcase() {
   return (
     <section className="py-32 bg-[#0a0a0a] text-white relative border-b border-white/10">
-      <div className="max-w-[90vw] mx-auto">
+      <div className="max-w-[100vw] px-4 md:px-0 md:max-w-[90vw] mx-auto">
         {/* Section Header */}
-        <div className="mb-32 border-b border-white/20 pb-10 flex flex-col md:flex-row justify-between items-end">
-          <h2 className="font-editorial text-6xl md:text-8xl font-black uppercase leading-none">
+        <div className="mb-20 md:mb-32 border-b border-white/20 pb-10 flex flex-col md:flex-row justify-between items-end">
+          <h2 className="font-editorial text-5xl md:text-8xl font-black uppercase leading-none">
             EXCLUSIVE<br/>COLLECTION
           </h2>
-          <p className="font-industrial text-[#d40000] text-sm tracking-[0.2em] uppercase mt-4 md:mt-0 font-bold max-w-xs text-right">
+          <p className="font-industrial text-[#d40000] text-[10px] md:text-sm tracking-[0.2em] uppercase mt-6 md:mt-0 font-bold max-w-xs md:text-right">
             CURATED SELECTION OF THE FINEST VEHICLES AVAILABLE IN EGYPT
           </p>
         </div>
 
         {/* Asymmetrical Grid */}
-        <div className="flex flex-col gap-32">
+        <div className="flex flex-col gap-24 md:gap-32">
           {CARS.map((car, index) => (
             <motion.div
               key={car.id}
@@ -57,20 +57,26 @@ export function CarShowcase() {
               className={`relative flex flex-col ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"} items-center gap-10 md:gap-20 group`}
             >
               {/* Massive background number */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-editorial text-[30vw] font-black text-white/[0.02] pointer-events-none z-0">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-editorial text-[50vw] md:text-[30vw] font-black text-white/[0.03] pointer-events-none z-0">
                 0{index + 1}
               </div>
 
-              {/* Image Container */}
+              {/* Image Container with Clip Path Reveal */}
               <Link href={`/car/${car.id}`} className="block w-full md:w-3/5 z-10 relative overflow-hidden bg-white/5 border border-white/10 aspect-[4/3]">
-                <div className="absolute inset-0 grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-105 ease-[0.76,0,0.24,1]">
+                <motion.div 
+                  initial={{ clipPath: "inset(100% 0 0 0)" }}
+                  whileInView={{ clipPath: "inset(0% 0 0 0)" }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1], delay: 0.1 }}
+                  className="absolute inset-0 grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-105 ease-[0.76,0,0.24,1]"
+                >
                   <Image
                     src={car.image}
                     alt={car.name}
                     fill
                     className="object-cover"
                   />
-                </div>
+                </motion.div>
                 {/* Red accent bar on hover */}
                 <div className="absolute top-0 left-0 w-full h-1 bg-[#d40000] scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500" />
               </Link>

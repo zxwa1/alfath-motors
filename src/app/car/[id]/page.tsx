@@ -82,50 +82,61 @@ export default function CarDetailsPage() {
 
   return (
     <main className="min-h-screen bg-[#0a0a0a] text-white pt-24 pb-32">
-      <div className="max-w-[90vw] mx-auto">
+      <div className="max-w-[100vw] px-4 md:px-0 md:max-w-[90vw] mx-auto">
         
         {/* Back Button */}
         <button 
           onClick={() => router.back()}
-          className="font-industrial text-sm tracking-widest uppercase flex items-center gap-2 hover:text-[#d40000] transition-colors mb-12"
+          className="font-industrial text-sm tracking-widest uppercase flex items-center gap-2 hover:text-[#d40000] transition-colors mb-8 md:mb-12"
         >
           <span className="text-xl">←</span> BACK TO SHOWROOM
         </button>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
           
           {/* Image Section - Brutalist styling */}
-          <div className="relative aspect-[4/3] bg-white/5 border border-white/10 p-4">
+          <motion.div 
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
+            className="relative aspect-[4/3] bg-white/5 border border-white/10 p-2 md:p-4 mt-4 md:mt-0"
+          >
             <div className="w-full h-full relative grayscale">
               <Image 
                 src={car.image} 
                 alt={car.name} 
                 fill 
                 className="object-cover" 
+                priority
               />
             </div>
-            <div className="absolute top-0 right-0 w-16 h-16 border-t-2 border-r-2 border-[#d40000] translate-x-4 -translate-y-4" />
-            <div className="absolute bottom-0 left-0 w-16 h-16 border-b-2 border-l-2 border-[#d40000] -translate-x-4 translate-y-4" />
-          </div>
+            <div className="hidden md:block absolute top-0 right-0 w-16 h-16 border-t-2 border-r-2 border-[#d40000] translate-x-4 -translate-y-4" />
+            <div className="hidden md:block absolute bottom-0 left-0 w-16 h-16 border-b-2 border-l-2 border-[#d40000] -translate-x-4 translate-y-4" />
+          </motion.div>
 
           {/* Details Section */}
-          <div className="flex flex-col justify-center">
-            <span className="font-industrial text-[#d40000] text-sm tracking-[0.3em] font-bold mb-4">
+          <motion.div 
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, ease: [0.76, 0, 0.24, 1], delay: 0.2 }}
+            className="flex flex-col justify-center"
+          >
+            <span className="font-industrial text-[#d40000] text-xs md:text-sm tracking-[0.3em] font-bold mb-4">
               EDITION // {car.year}
             </span>
-            <h1 className="font-editorial text-5xl md:text-7xl font-black uppercase leading-none mb-8">
+            <h1 className="font-editorial text-4xl md:text-7xl font-black uppercase leading-none mb-6 md:mb-8">
               {car.name}
             </h1>
             
-            <div className="text-3xl font-industrial mb-12 border-b border-white/20 pb-6 font-bold">
+            <div className="text-2xl md:text-3xl font-industrial mb-8 md:mb-12 border-b border-white/20 pb-6 font-bold">
               {car.price}
             </div>
 
             {/* Specs Grid */}
-            <div className="grid grid-cols-2 gap-x-8 gap-y-6 mb-16 font-industrial text-sm">
+            <div className="grid grid-cols-2 gap-x-4 md:gap-x-8 gap-y-6 mb-12 md:mb-16 font-industrial text-xs md:text-sm">
               {Object.entries(car.specs).map(([key, value]) => (
                 <div key={key} className="flex flex-col border-b border-white/10 pb-2">
-                  <span className="text-white/40 uppercase tracking-widest text-xs mb-1">{key}</span>
+                  <span className="text-white/40 uppercase tracking-widest text-[10px] md:text-xs mb-1">{key}</span>
                   <span className="font-bold">{value as React.ReactNode}</span>
                 </div>
               ))}
@@ -135,12 +146,12 @@ export default function CarDetailsPage() {
             <BookingModal 
               carName={car.name} 
               trigger={
-                <button className="w-full font-industrial bg-white text-black py-6 text-xl tracking-widest uppercase font-bold hover:bg-[#d40000] hover:text-white transition-colors duration-300">
+                <button className="w-full font-industrial bg-white text-black py-4 md:py-6 text-sm md:text-xl tracking-widest uppercase font-bold hover:bg-[#d40000] hover:text-white transition-colors duration-300">
                   REQUEST A TEST DRIVE
                 </button>
               } 
             />
-          </div>
+          </motion.div>
         </div>
       </div>
     </main>
