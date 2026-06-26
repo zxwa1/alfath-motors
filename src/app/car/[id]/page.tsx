@@ -1,9 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useParams, useRouter } from "next/navigation";
 import { BookingModal } from "@/components/blocks/BookingModal";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 
 const CARS_DB = {
@@ -64,6 +64,15 @@ export default function CarDetailsPage() {
   const params = useParams();
   const router = useRouter();
   const [car, setCar] = useState<any>(null);
+  
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+
+  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const imageOpacity = useTransform(scrollYProgress, [0, 1], [1, 0.2]);
 
   useEffect(() => {
     if (params?.id) {
@@ -77,81 +86,85 @@ export default function CarDetailsPage() {
   }, [params, router]);
 
   if (!car) {
-    return <div className="min-h-screen bg-[#0a0a0a]" />;
+    return <div className="min-h-screen bg-[#050505]" />;
   }
 
   return (
-    <main className="min-h-screen bg-[#0a0a0a] text-white pt-24 pb-32">
-      <div className="max-w-[100vw] px-4 md:px-0 md:max-w-[90vw] mx-auto">
-        
-        {/* Back Button */}
-        <button 
-          onClick={() => router.back()}
-          className="font-industrial text-sm tracking-widest uppercase flex items-center gap-2 hover:text-[#d40000] transition-colors mb-8 md:mb-12"
-        >
-          <span className="text-xl">←</span> BACK TO SHOWROOM
-        </button>
+    <main ref={ref} className="bg-[#050505] text-white overflow-hidden relative">
+      
+      {/* Full Screen Image Parallax */}
+      <motion.div 
+        style={{ y: imageY, opacity: imageOpacity }}
+        className="fixed top-0 left-0 w-full h-[70vh] md:h-screen z-0"
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#050505] z-10" />
+        <div className="absolute inset-0 bg-black/20 z-10" />
+        <Image 
+          src={car.image} 
+          alt={car.name} 
+          fill 
+          className="object-cover" 
+          priority
+        />
+      </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
+      {/* Floating Back Button */}
+      <button 
+        onClick={() => router.back()}
+        className="fixed top-8 left-4 md:left-8 z-50 glass-panel px-6 py-3 rounded-full font-industrial text-sm tracking-widest uppercase flex items-center gap-2 hover:bg-white hover:text-black transition-colors"
+      >
+        <span>←</span> BACK
+      </button>
+
+      {/* Content - Bottom Sheet Style */}
+      <div className="relative z-20 mt-[50vh] md:mt-[70vh] pb-32">
+        <div className="max-w-[100vw] px-4 md:max-w-[70vw] mx-auto">
           
-          {/* Image Section - Brutalist styling */}
           <motion.div 
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
-            className="relative aspect-[4/3] bg-white/5 border border-white/10 p-2 md:p-4 mt-4 md:mt-0"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: [0.25, 1, 0.5, 1] }}
+            className="glass-panel p-6 md:p-16 rounded-[40px] md:rounded-[60px] border border-white/10 relative overflow-hidden"
           >
-            <div className="w-full h-full relative grayscale">
-              <Image 
-                src={car.image} 
-                alt={car.name} 
-                fill 
-                className="object-cover" 
-                priority
-              />
-            </div>
-            <div className="hidden md:block absolute top-0 right-0 w-16 h-16 border-t-2 border-r-2 border-[#d40000] translate-x-4 -translate-y-4" />
-            <div className="hidden md:block absolute bottom-0 left-0 w-16 h-16 border-b-2 border-l-2 border-[#d40000] -translate-x-4 translate-y-4" />
-          </motion.div>
-
-          {/* Details Section */}
-          <motion.div 
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, ease: [0.76, 0, 0.24, 1], delay: 0.2 }}
-            className="flex flex-col justify-center"
-          >
-            <span className="font-industrial text-[#d40000] text-xs md:text-sm tracking-[0.3em] font-bold mb-4">
-              EDITION // {car.year}
-            </span>
-            <h1 className="font-editorial text-4xl md:text-7xl font-black uppercase leading-none mb-6 md:mb-8">
-              {car.name}
-            </h1>
+            <div className="ambient-glow opacity-30" />
             
-            <div className="text-2xl md:text-3xl font-industrial mb-8 md:mb-12 border-b border-white/20 pb-6 font-bold">
-              {car.price}
+            <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-end mb-12 border-b border-white/10 pb-8 gap-6">
+              <div>
+                <span className="font-industrial text-white/50 text-xs md:text-sm tracking-[0.3em] font-bold mb-4 block">
+                  EDITION // {car.year}
+                </span>
+                <h1 className="font-editorial text-5xl md:text-7xl font-black uppercase leading-none drop-shadow-xl">
+                  {car.name}
+                </h1>
+              </div>
+              <div className="text-3xl md:text-4xl font-industrial font-bold text-white/90 glass-panel px-6 py-3 rounded-2xl">
+                {car.price}
+              </div>
             </div>
 
             {/* Specs Grid */}
-            <div className="grid grid-cols-2 gap-x-4 md:gap-x-8 gap-y-6 mb-12 md:mb-16 font-industrial text-xs md:text-sm">
+            <div className="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mb-16 font-industrial text-sm">
               {Object.entries(car.specs).map(([key, value]) => (
-                <div key={key} className="flex flex-col border-b border-white/10 pb-2">
-                  <span className="text-white/40 uppercase tracking-widest text-[10px] md:text-xs mb-1">{key}</span>
-                  <span className="font-bold">{value as React.ReactNode}</span>
+                <div key={key} className="flex flex-col glass-panel p-4 rounded-2xl border border-white/5">
+                  <span className="text-white/40 uppercase tracking-widest text-[10px] md:text-xs mb-2">{key}</span>
+                  <span className="font-bold text-lg">{value as React.ReactNode}</span>
                 </div>
               ))}
             </div>
 
-            {/* Brutalist Button */}
-            <BookingModal 
-              carName={car.name} 
-              trigger={
-                <button className="w-full font-industrial bg-white text-black py-4 md:py-6 text-sm md:text-xl tracking-widest uppercase font-bold hover:bg-[#d40000] hover:text-white transition-colors duration-300">
-                  REQUEST A TEST DRIVE
-                </button>
-              } 
-            />
+            {/* Premium Button */}
+            <div className="relative z-10 flex justify-center">
+              <BookingModal 
+                carName={car.name} 
+                trigger={
+                  <button className="w-full md:w-auto font-industrial bg-white text-black px-12 py-5 rounded-full text-sm md:text-lg tracking-[0.2em] uppercase font-bold hover:scale-105 transition-transform duration-500 shadow-[0_0_40px_rgba(255,255,255,0.3)]">
+                    REQUEST A TEST DRIVE
+                  </button>
+                } 
+              />
+            </div>
           </motion.div>
+
         </div>
       </div>
     </main>
