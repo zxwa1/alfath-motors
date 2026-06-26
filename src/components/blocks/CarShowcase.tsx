@@ -15,12 +15,12 @@ const CARS = [
     tag: "LUXURY SEDAN",
   },
   {
-    id: "mercedes-c180-2020",
-    name: "MERCEDES C180",
-    year: "2020",
-    price: "2,500,000 ج.م",
+    id: "porsche-911-carrera-2022",
+    name: "PORSCHE 911 CARRERA",
+    year: "2022",
+    price: "7,500,000 ج.م",
     image: "/images/car2.png",
-    tag: "EXECUTIVE",
+    tag: "SUPERCAR",
   },
   {
     id: "range-rover-velar-2021",
@@ -29,6 +29,30 @@ const CARS = [
     price: "4,100,000 ج.م",
     image: "/images/car3.png",
     tag: "PREMIUM SUV",
+  },
+  {
+    id: "mercedes-g63-amg-2023",
+    name: "MERCEDES G63 AMG",
+    year: "2023",
+    price: "12,000,000 ج.م",
+    image: "https://images.unsplash.com/photo-1520031441872-265e4ff70366?auto=format&fit=crop&q=80&w=2000",
+    tag: "LUXURY OFF-ROAD",
+  },
+  {
+    id: "lamborghini-huracan-2022",
+    name: "LAMBORGHINI HURACÁN",
+    year: "2022",
+    price: "18,500,000 ج.م",
+    image: "https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?auto=format&fit=crop&q=80&w=2000",
+    tag: "EXOTIC",
+  },
+  {
+    id: "rolls-royce-ghost-2024",
+    name: "ROLLS-ROYCE GHOST",
+    year: "2024",
+    price: "25,000,000 ج.م",
+    image: "https://images.unsplash.com/photo-1631526615783-a4421d604e30?auto=format&fit=crop&q=80&w=2000",
+    tag: "ULTRA LUXURY",
   },
 ];
 
