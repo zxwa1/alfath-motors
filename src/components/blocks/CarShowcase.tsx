@@ -48,12 +48,8 @@ export function CarShowcase() {
         {/* Asymmetrical Grid */}
         <div className="flex flex-col gap-24 md:gap-32">
           {CARS.map((car, index) => (
-            <motion.div
+            <div
               key={car.id}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
               className={`relative flex flex-col ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"} items-center gap-10 md:gap-20 group`}
             >
               {/* Massive background number */}
@@ -64,10 +60,10 @@ export function CarShowcase() {
               {/* Image Container with Clip Path Reveal */}
               <Link href={`/car/${car.id}`} className="block w-full md:w-3/5 z-10 relative overflow-hidden bg-white/5 border border-white/10 aspect-[4/3]">
                 <motion.div 
-                  initial={{ clipPath: "inset(100% 0 0 0)" }}
-                  whileInView={{ clipPath: "inset(0% 0 0 0)" }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1], delay: 0.1 }}
+                  initial={{ clipPath: "inset(100% 0% 0% 0%)" }}
+                  whileInView={{ clipPath: "inset(0% 0% 0% 0%)" }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] }}
                   className="absolute inset-0 grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-105 ease-[0.76,0,0.24,1]"
                 >
                   <Image
@@ -102,7 +98,7 @@ export function CarShowcase() {
                   VIEW DETAILS
                 </Link>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
