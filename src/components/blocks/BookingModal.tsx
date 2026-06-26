@@ -12,14 +12,12 @@ import {
 import { useState } from "react";
 import { motion } from "framer-motion";
 
-export function BookingModal({ carName, trigger }: { carName: string, trigger: React.ReactNode }) {
+export function BookingModal({ carName, trigger }: { carName: string, trigger: React.ReactElement }) {
   const [submitted, setSubmitted] = useState(false);
 
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        {trigger}
-      </DialogTrigger>
+      <DialogTrigger render={trigger} />
       <DialogContent className="sm:max-w-[425px] bg-black border border-[#ff00a0]/30 shadow-[0_0_40px_rgba(255,0,160,0.2)] text-white">
         <DialogHeader>
           <DialogTitle className="text-2xl font-black uppercase tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-white to-[#00d4ff]">
