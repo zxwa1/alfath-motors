@@ -51,7 +51,7 @@ const CARS = [
     name: "ROLLS-ROYCE GHOST",
     year: "2024",
     price: "25,000,000 ج.م",
-    image: "/images/rolls_royce.jpg",
+    image: "/images/rolls_royce.png",
     tag: "ULTRA LUXURY",
   },
 ];
